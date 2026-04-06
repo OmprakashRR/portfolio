@@ -1284,6 +1284,7 @@ p { color: var(--text-muted); }
     .edu-grid { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr; }
     :root { --nav-h: 60px; }
+    .navbar { overflow: visible; }
     .nav-links {
         display: none;
         position: absolute;
