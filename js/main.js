@@ -166,4 +166,45 @@
         progressBar.style.width = pct + '%';
     }, { passive: true });
 
+    /* ==================== QUICK NAV ==================== */
+    const quickNav = document.getElementById('quickNav');
+    const quickNavToggle = document.getElementById('quickNavToggle');
+    const quickNavMenu = document.getElementById('quickNavMenu');
+
+    // Show after scrolling past hero
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight * 0.5) {
+            quickNav.classList.add('visible');
+        } else {
+            quickNav.classList.remove('visible');
+            quickNav.classList.remove('open');
+        }
+    }, { passive: true });
+
+    quickNavToggle.addEventListener('click', () => {
+        quickNav.classList.toggle('open');
+    });
+
+    // Close menu and smooth scroll on link click
+    quickNavMenu.querySelectorAll('.qn-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'));
+                const top = target.getBoundingClientRect().top + window.scrollY - navH;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+            quickNav.classList.remove('open');
+        });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!quickNav.contains(e.target)) {
+            quickNav.classList.remove('open');
+        }
+    });
+
 })();
