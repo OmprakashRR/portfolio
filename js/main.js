@@ -20,21 +20,6 @@
         localStorage.setItem('theme', next);
     });
 
-    /* ==================== NAVBAR SCROLL ==================== */
-    const navbar = document.getElementById('navbar');
-
-    const handleScroll = () => {
-        if (window.scrollY > 40) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-        updateActiveNav();
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
     /* ==================== ACTIVE NAV LINK ==================== */
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -52,6 +37,21 @@
             }
         });
     }
+
+    /* ==================== NAVBAR SCROLL ==================== */
+    const navbar = document.getElementById('navbar');
+
+    const handleScroll = () => {
+        if (window.scrollY > 40) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        updateActiveNav();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
 
     /* ==================== HAMBURGER MENU ==================== */
     const hamburger = document.getElementById('hamburger');
