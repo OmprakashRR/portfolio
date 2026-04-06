@@ -1285,21 +1285,22 @@ p { color: var(--text-muted); }
     .skills-grid { grid-template-columns: 1fr; }
     :root { --nav-h: 60px; }
     .navbar { overflow: visible; }
+    .nav-container { position: relative; }
     .nav-links {
-        display: none;
+        display: none !important;
         position: absolute;
         top: var(--nav-h);
-        left: 0; right: 0;
+        left: -2rem; right: -2rem;
         background: rgba(6,13,31,0.98);
         backdrop-filter: blur(16px);
         flex-direction: column;
-        padding: 1rem;
+        padding: 1rem 2rem;
         border-bottom: 1px solid rgba(255,255,255,0.08);
         gap: 0.25rem;
-        z-index: 1000;
+        z-index: 9999;
     }
-    .nav-links.open { display: flex; }
-    .nav-link { width: 100%; padding: 0.75rem 1rem; }
+    .nav-links.open { display: flex !important; }
+    .nav-link { width: 100%; padding: 0.75rem 1rem; color: rgba(255,255,255,0.85) !important; }
     .hamburger { display: flex; }
     .floating-badge { display: none; }
     .hero-visual { height: auto; }
