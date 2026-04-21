@@ -939,6 +939,37 @@
         </div>
     </footer>
 
+    <!-- ===================== AI CHAT ===================== -->
+    <div class="ai-chat" id="aiChat">
+        <button class="ai-chat-toggle" id="aiChatToggle" aria-label="Chat with AI">
+            <svg class="ai-icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg class="ai-icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <span class="ai-chat-label">Ask me anything</span>
+        </button>
+        <div class="ai-chat-panel" id="aiChatPanel">
+            <div class="ai-chat-header">
+                <div class="ai-chat-title">
+                    <span class="ai-dot"></span>
+                    <div>
+                        <div class="ai-name">Omprakash · Digital Twin</div>
+                        <div class="ai-subtitle">Ask me about my research, work, or background</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-msg ai-msg-bot">
+                    Hi! I'm an AI trained on Omprakash's profile. Ask me about his research, publications, academic background, or anything you'd like to know. For collaborations, he'd love to connect directly via <a href="https://calendly.com/omprakashramalingamrethnam/30min" target="_blank" rel="noopener">Calendly</a>.
+                </div>
+            </div>
+            <form class="ai-chat-input" id="aiChatForm">
+                <input type="text" id="aiChatText" placeholder="Type your question..." autocomplete="off" maxlength="500" />
+                <button type="submit" id="aiChatSend" aria-label="Send">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- ===================== FLOATING NAV ===================== -->
     <div class="quick-nav" id="quickNav">
         <button class="quick-nav-toggle" id="quickNavToggle" aria-label="Quick navigation">

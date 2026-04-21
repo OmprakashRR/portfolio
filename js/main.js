@@ -207,4 +207,76 @@
         }
     });
 
+    /* ==================== AI CHAT ==================== */
+    const AI_ENDPOINT = 'https://digital-twin.omprakashrr.workers.dev/';
+    const aiChat = document.getElementById('aiChat');
+    const aiToggle = document.getElementById('aiChatToggle');
+    const aiForm = document.getElementById('aiChatForm');
+    const aiInput = document.getElementById('aiChatText');
+    const aiSend = document.getElementById('aiChatSend');
+    const aiMessages = document.getElementById('aiChatMessages');
+    const aiHistory = [];
+
+    aiToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        aiChat.classList.toggle('open');
+        if (aiChat.classList.contains('open')) {
+            setTimeout(() => aiInput.focus(), 100);
+        }
+    });
+
+    function appendMessage(role, text) {
+        const div = document.createElement('div');
+        div.className = `ai-msg ai-msg-${role}`;
+        div.textContent = text;
+        aiMessages.appendChild(div);
+        aiMessages.scrollTop = aiMessages.scrollHeight;
+        return div;
+    }
+
+    function appendTyping() {
+        const div = document.createElement('div');
+        div.className = 'ai-msg ai-msg-bot ai-msg-typing';
+        div.innerHTML = '<span></span><span></span><span></span>';
+        aiMessages.appendChild(div);
+        aiMessages.scrollTop = aiMessages.scrollHeight;
+        return div;
+    }
+
+    aiForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = aiInput.value.trim();
+        if (!text) return;
+
+        appendMessage('user', text);
+        aiHistory.push({ role: 'user', content: text });
+        aiInput.value = '';
+        aiSend.disabled = true;
+
+        const typing = appendTyping();
+
+        try {
+            const res = await fetch(AI_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: aiHistory }),
+            });
+            const data = await res.json();
+            typing.remove();
+
+            if (data.reply) {
+                appendMessage('bot', data.reply);
+                aiHistory.push({ role: 'assistant', content: data.reply });
+            } else {
+                appendMessage('bot', "Sorry, I'm having trouble responding right now. Please try again, or email omprakash.rethnam@tudublin.ie directly.");
+            }
+        } catch (err) {
+            typing.remove();
+            appendMessage('bot', "Sorry, I couldn't connect. Please try again in a moment.");
+        } finally {
+            aiSend.disabled = false;
+            aiInput.focus();
+        }
+    });
+
 })();
