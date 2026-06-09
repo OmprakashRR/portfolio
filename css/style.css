@@ -794,6 +794,67 @@ p { color: var(--text-muted); }
 .project-featured .chip { color: #93c5fd; background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.25); }
 [data-theme="light"] .project-featured .chip { color: var(--accent); background: var(--accent-light); border-color: var(--accent-mid); }
 
+/* ===================== RESEARCH PROPOSALS ===================== */
+.proposals-lead {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 80ch;
+    margin-bottom: 1.6rem;
+}
+.proposals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+.proposal-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    transition: all var(--transition);
+}
+.proposal-row:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+.proposal-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+.proposal-status {
+    display: inline-flex;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+}
+.proposal-amount {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+}
+.proposal-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.45;
+    margin-bottom: 0.4rem;
+}
+.proposal-meta {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.55;
+}
+
 /* ===================== PUBLICATIONS ===================== */
 .pub-controls {
     display: flex;

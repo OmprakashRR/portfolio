@@ -55,7 +55,12 @@ MAJOR AWARDS & RECOGNITION:
 
 RESEARCH FUNDING SECURED (as co-author/collaborator):
 - DST India & IC-Impacts Canada funded "SML-Opt Framework for Net Zero Energy Building Retrofits" — INR 12 million (~$144,187). PIs: Dr. Albert Thomas (IIT Bombay) and Dr. Elie Azar (Carleton University, Canada). 2023-2025.
-- Glazing Society of India "SIMecc-Opt framework" — INR 0.2 million. PI: Dr. Albert Thomas. 2023-2025.
+- Glazing Society of India "SIMecc-Opt framework" — INR 0.2 million (~$2,403). PI: Dr. Albert Thomas. 2023-2025.
+
+RESEARCH PROPOSALS & GRANT WRITING (co-authored 8 competitive proposals totalling ~$520K in requested funding; ~$146K secured across the two funded grants above):
+- Submitted / awaiting: "MAPEO" open-source multi-agent platform for indoor thermal comfort — DST India, ~$216,175 (PIs: Dr. Albert Thomas, Dr. Ashrant Aryal of Texas A&M University); "Integrated framework for net-energy building communities using passive retrofits and shared renewables" — DST India, ~$60,048 (PIs: Dr. Albert Thomas, Dr. Rakesh Kumar Mishra of IIT BHU Varanasi).
+- Not funded: "Decarbonising the building sector toward 2070 net-zero goals" using coupled UBEM + machine learning — DST India, ~$66,085; "Digital twin-based office building monitoring for COVID restrictions" — ASEAN-India STIC, ~$17,934 (partners in Vietnam and Malaysia); "AI-powered Plastic Cash Converter Machine for plastic recycling incentives" — Institute of Eminence, IIT Bombay, ~$13,208 (I was Lead PI); "Fabric solar-PV integrated IoT systems for slum building stock" — Tinkerers' Laboratory, IIT Bombay, ~$3,721 (I was Lead PI).
+- My role across proposals: conceptual framework, literature review, research design, grant-application support, budget development, and coordinating international/inter-institutional partnerships.
 
 RESEARCH FOCUS / INTERESTS:
 - Urban & Community-scale Building Energy Modelling (UBEM / CBEM)
@@ -66,8 +71,9 @@ RESEARCH FOCUS / INTERESTS:
 - Policy and regulatory frameworks for building energy standards
 
 NOTABLE PUBLICATIONS (all Q1 journals unless noted):
-- 8+ Q1 journal papers (Journal of Building Engineering, Journal of Computing in Civil Engineering ASCE, Journal of Building Performance Simulation, Smart and Sustainable Built Environment, Journal of Architectural Engineering ASCE, Sustainable Production and Consumption, Built Environment Project and Asset Management)
-- 8+ conference papers (Winter Simulation Conference, IBPSA, European Conference on Computing in Construction, CIB World Building Congress, ICCEES, etc.)
+- 8 Q1 journal papers (Journal of Building Engineering, Journal of Computing in Civil Engineering ASCE, Journal of Building Performance Simulation, Smart and Sustainable Built Environment, Journal of Architectural Engineering ASCE, Sustainable Production and Consumption, Built Environment Project and Asset Management)
+- 10 conference papers (Winter Simulation Conference, IBPSA, European Conference on Computing in Construction, CIB World Building Congress, ICCEES, etc.)
+- Two papers accepted for 2026: "Climate Change–Induced Overheating Risk in Irish Dwellings: A Machine Learning–Based Assessment" (SASBE 2026, Cambridge, UK, Jul 2026, Springer Nature forthcoming) and "A Model for Delivering Resilience and Adaptive Capacity in the Built Environment" (WSBE26, Melbourne, Australia, Jun 2026)
 
 INVITED TALKS:
 - Apr 2025: Invited Speaker, National Construction Summit 2025 (NCS 2025), Dublin — on CC-DORM project
