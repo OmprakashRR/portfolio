@@ -58,8 +58,7 @@ RESEARCH FUNDING SECURED (as co-author/collaborator):
 - Glazing Society of India "SIMecc-Opt framework" — INR 0.2 million (~$2,403). PI: Dr. Albert Thomas. 2023-2025.
 
 RESEARCH PROPOSALS & GRANT WRITING (co-authored 8 competitive proposals totalling ~$520K in requested funding; ~$146K secured across the two funded grants above):
-- Submitted / awaiting: "MAPEO" open-source multi-agent platform for indoor thermal comfort — DST India, ~$216,175 (PIs: Dr. Albert Thomas, Dr. Ashrant Aryal of Texas A&M University); "Integrated framework for net-energy building communities using passive retrofits and shared renewables" — DST India, ~$60,048 (PIs: Dr. Albert Thomas, Dr. Rakesh Kumar Mishra of IIT BHU Varanasi).
-- Not funded: "Decarbonising the building sector toward 2070 net-zero goals" using coupled UBEM + machine learning — DST India, ~$66,085; "Digital twin-based office building monitoring for COVID restrictions" — ASEAN-India STIC, ~$17,934 (partners in Vietnam and Malaysia); "AI-powered Plastic Cash Converter Machine for plastic recycling incentives" — Institute of Eminence, IIT Bombay, ~$13,208 (I was Lead PI); "Fabric solar-PV integrated IoT systems for slum building stock" — Tinkerers' Laboratory, IIT Bombay, ~$3,721 (I was Lead PI).
+- Other proposals co-authored, submitted to national and international funders: "MAPEO" open-source multi-agent platform for indoor thermal comfort — DST India, ~$216,175 (PIs: Dr. Albert Thomas, Dr. Ashrant Aryal of Texas A&M University); "Integrated framework for net-energy building communities using passive retrofits and shared renewables" — DST India, ~$60,048 (PIs: Dr. Albert Thomas, Dr. Rakesh Kumar Mishra of IIT BHU Varanasi); "Decarbonising the building sector toward 2070 net-zero goals" using coupled UBEM + machine learning — DST India, ~$66,085; "Digital twin-based office building monitoring for COVID restrictions" — ASEAN-India STIC, ~$17,934 (partners in Vietnam and Malaysia); "AI-powered Plastic Cash Converter Machine for plastic recycling incentives" — Institute of Eminence, IIT Bombay, ~$13,208 (I was Lead PI); "Fabric solar-PV integrated IoT systems for slum building stock" — Tinkerers' Laboratory, IIT Bombay, ~$3,721 (I was Lead PI).
 - My role across proposals: conceptual framework, literature review, research design, grant-application support, budget development, and coordinating international/inter-institutional partnerships.
 
 RESEARCH FOCUS / INTERESTS:
@@ -76,6 +75,7 @@ NOTABLE PUBLICATIONS (all Q1 journals unless noted):
 - Two papers accepted for 2026: "Climate Change–Induced Overheating Risk in Irish Dwellings: A Machine Learning–Based Assessment" (SASBE 2026, Cambridge, UK, Jul 2026, Springer Nature forthcoming) and "A Model for Delivering Resilience and Adaptive Capacity in the Built Environment" (WSBE26, Melbourne, Australia, Jun 2026)
 
 INVITED TALKS:
+- Jan 2026: Invited Speaker, IBSO (Irish Building Stock Observatory) Webinar Series, TU Dublin — "Investigating dwelling overheating risks in cooler climates using ensemble-based machine learning surrogates of parametric dynamic simulation models"
 - Apr 2025: Invited Speaker, National Construction Summit 2025 (NCS 2025), Dublin — on CC-DORM project
 - Oct 2025: Poster Presentation, SEAI National Energy Research and Policy Conference, Ireland
 - Sept 2024: Expert lecture "An Urban Modelling Perspective to Energy Efficiency and Thermal Comfort" in course CVL 777 Building Sciences, IIT Delhi
