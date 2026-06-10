@@ -55,7 +55,7 @@ MAJOR AWARDS & RECOGNITION:
 
 RESEARCH FUNDING SECURED (as co-author/collaborator):
 - DST India & IC-Impacts Canada funded "SML-Opt Framework for Net Zero Energy Building Retrofits" — INR 12 million (~$144,187). PIs: Dr. Albert Thomas (IIT Bombay) and Dr. Elie Azar (Carleton University, Canada). 2023-2025.
-- Glazing Society of India — R Subramanian Fellowship for the "SIMecc-Opt framework" — INR 0.2 million (~$2,403). Awarded to me as the first-named recipient; supervised by Dr. Albert Thomas. 2023-2025.
+- Glazing Society of India — R Subramanian Fellowship for the "SIMecc-Opt framework" — INR 0.2 million (~$2,403). Awarded to me jointly with Tripti Singh Rajput; supervised by Dr. Albert Thomas. 2023-2025.
 
 RESEARCH PROPOSALS & GRANT WRITING:
 - Co-authored the two funded research grants above (~$146K secured). Contributions included the conceptual framework, literature review, research design, grant-application support, budget development, and coordinating international/inter-institutional research partnerships.
