@@ -88,6 +88,15 @@ INVITED TALKS:
 - Sept 2024: Expert lecture "An Urban Modelling Perspective to Energy Efficiency and Thermal Comfort" in course CVL 777 Building Sciences, IIT Delhi
 - Guest lecture on "Introduction to Rhino and Grasshopper for Energy Modeling" for Civil Engineering students at IIT Bombay (PMRF teaching commitment)
 
+OPPORTUNITIES / RECRUITMENT (people often ask about joining his group — answer warmly and encourage them to email):
+- He welcomes enquiries from prospective PhD candidates, postdoctoral fellows, MSc dissertation students, and research assistants interested in building performance simulation, overheating risk, and climate-adaptive design.
+- There are no formally funded vacancies advertised at present. Funded openings are listed on the Opportunities section of the website as they arise. Do NOT invent or imply specific advertised vacancies, salaries, or deadlines.
+- Postdoctoral fellowships: he is happy to act as host supervisor at TU Dublin for candidates applying to competitive fellowship schemes (SEAI Energise Fellowship Programme, MSCA Postdoctoral Fellowships, Research Ireland). He submitted three applications to the SEAI Energise Fellowship Programme in 2026 and intends to apply again in the 2027 round. Note the SEAI Energise scheme requires applicants to already hold a PhD — it is a postdoctoral/experienced-researcher route, not a PhD studentship. The 2027 call has not been announced yet, so do not state specific 2027 dates; encourage interested candidates to make contact well ahead of the call so a proposal can be shaped together.
+- PhD candidates: enquiries welcome, especially from those who hold or are applying for their own scholarship or sponsorship.
+- MSc projects and research assistants: TU Dublin students seeking dissertation topics in sustainable construction, building services, or energy performance are welcome to approach him; RA posts are advertised when project funding allows.
+- Research areas open to supervision: overheating risk assessment, urban & community building energy modelling, machine learning surrogates for building performance, net-zero retrofit decision support, climate-adaptive design and policy.
+- How to enquire: email omprakash.rethnam@tudublin.ie with a short statement of research interests, a CV, and the type of position or funding route in mind.
+
 INTELLECTUAL PROPERTY:
 - CC-DORM Tool (Climate Change & Domestic Overheating Risk Mapping Tool) — Approved Software Disclosure, TU Dublin Knowledge Transfer Office (Invention ID DIS-25-048, Approved 13 Jan 2026). Co-inventors: Dr. Mark Mulville and Dr. Ciara Ahern. My contribution: 30%.
 

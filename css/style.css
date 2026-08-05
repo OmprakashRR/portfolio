@@ -968,6 +968,33 @@ p { color: var(--text-muted); }
 [data-theme="light"] .project-featured .pub-link { color: #93c5fd; }
 [data-theme="light"] .project-featured .pub-link:hover { color: #bfdbfe; }
 
+/* ===================== OPPORTUNITIES ===================== */
+.opp-lead {
+    max-width: 760px;
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+/* Third card spans the full row so the grid does not end on a gap */
+.opp-wide { grid-column: 1 / -1; }
+
+.opp-cta {
+    margin-top: 2.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+.opp-cta p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 0.6rem; }
+.opp-cta .opp-note { font-size: 0.82rem; font-style: italic; margin-bottom: 1.25rem; }
+.opp-cta .btn { display: inline-flex; }
+
+@media (max-width: 640px) {
+    .opp-cta { padding: 1.35rem 1.25rem; }
+    .opp-cta .btn { width: 100%; justify-content: center; }
+}
+
 /* ===================== TEACHING ===================== */
 .teaching-columns {
     display: grid;
