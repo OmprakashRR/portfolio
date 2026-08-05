@@ -962,6 +962,12 @@ p { color: var(--text-muted); }
 }
 .pub-link:hover { color: var(--accent-hover); text-decoration: underline; }
 
+/* Featured (dark) project card needs a lighter link colour for contrast */
+.project-featured .pub-link { color: #93c5fd; }
+.project-featured .pub-link:hover { color: #bfdbfe; }
+[data-theme="light"] .project-featured .pub-link { color: #93c5fd; }
+[data-theme="light"] .project-featured .pub-link:hover { color: #bfdbfe; }
+
 /* ===================== TEACHING ===================== */
 .teaching-columns {
     display: grid;
