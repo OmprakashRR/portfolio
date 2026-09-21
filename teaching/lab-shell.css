@@ -1,0 +1,33 @@
+/* Portfolio navigation around the self-contained classroom tools. */
+:root { --site-bg:#fff; --site-alt:#f7f9fc; --site-text:#0f172a; --site-muted:#64748b; --site-accent:#1d4ed8; --site-border:#e2e8f0; }
+[data-theme="dark"] { --site-bg:#0d1a2d; --site-alt:#0c1630; --site-text:#e2e8f0; --site-muted:#a5b6cd; --site-accent:#75acff; --site-border:#2d3f5c; }
+.lab-page { padding:0; margin:0; }
+.lab-header { background:var(--site-bg); border-bottom:1px solid var(--site-border); color:var(--site-text); }
+.lab-header-inner { max-width:1180px; margin:auto; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; }
+.lab-header .lab-brand { color:var(--site-accent); font-weight:800; letter-spacing:.02em; text-decoration:none; }
+.lab-header nav { display:flex; align-items:center; gap:18px; flex-wrap:wrap; font-size:14px; }
+.lab-header nav a, .lab-footer a { color:var(--site-accent); text-decoration:none; }
+.lab-header a:hover, .lab-footer a:hover { text-decoration:underline; }
+.lab-header .lab-theme { background:var(--site-bg); color:var(--site-text); border:1px solid var(--site-border); border-radius:7px; padding:7px 11px; font-size:13px; font-weight:600; cursor:pointer; }
+.lab-header a:focus-visible, .lab-footer a:focus-visible, .lab-theme:focus-visible { outline:3px solid var(--site-accent); outline-offset:4px; }
+.lab-footer { background:var(--site-bg); color:var(--site-muted); border-top:1px solid var(--site-border); padding:24px; font-size:13px; }
+.lab-footer-inner { max-width:1132px; margin:auto; display:flex; gap:16px; justify-content:space-between; flex-wrap:wrap; }
+.lab-page > .container { width:calc(100% - 36px); margin:28px auto; }
+.lab-page .massing-worksheet { margin-top:24px; padding-top:22px; border-top:1px solid var(--site-border); }
+.massing-worksheet details { margin-top:12px; }
+.massing-worksheet summary { cursor:pointer; font-weight:600; }
+@media screen {
+ :root { --ink:var(--site-text); --muted:var(--site-muted); --paper:var(--site-alt); --line:var(--site-border); --border:var(--site-border); --teal:var(--site-accent); --bg-app:var(--site-alt); --bg-card:var(--site-bg); --text-main:var(--site-text); --text-muted:var(--site-muted); }
+ .lab-page { background:var(--site-alt); color:var(--site-text); }
+ .lab-page .panel, .lab-page .math, .lab-page .formula:not(.math .formula), .lab-page .container { background:var(--site-bg); }
+ .lab-page .note, .lab-page .answers, .lab-page .confusion, .lab-page th, .lab-page .constant-banner, .lab-page .takeaway { background:var(--site-alt); color:var(--site-text); }
+ .lab-page button { background:var(--site-bg); color:var(--site-text); }
+ .lab-page .primary, .lab-page .segmented button[aria-pressed="true"] { background:#1d4ed8; border-color:#1d4ed8; color:white; }
+ .lab-page .timeline button { background:#294359; color:#fff; }
+ .lab-page .brand { margin-bottom:24px; }
+ .lab-page .formula { color:var(--site-accent); }
+ .lab-page .control-group label { color:var(--site-text); }
+ .lab-page .number { background:#1d4ed8; color:white; }
+}
+@media (max-width:560px) { .lab-header-inner { padding:14px 18px; } .lab-header nav { gap:12px; } .lab-page > .container { padding:18px; } }
+@media print { .lab-header, .lab-footer { display:none !important; } .lab-page > .container { width:100%; margin:0; box-shadow:none; } }
