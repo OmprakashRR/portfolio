@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Massing & Form Simulator</title>
+<style>
+:root{--primary:#2563eb;--success:#16a34a;--warning:#ea580c;--danger:#dc2626;--bg-card:#fff;--bg-app:#f8fafc;--text-main:#0f172a;--text-muted:#475569;--border:#e2e8f0}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg-app);color:var(--text-main);margin:0;padding:20px;line-height:1.5}
+.container{max-width:1050px;margin:auto;background:var(--bg-card);padding:24px;border-radius:12px;box-shadow:0 4px 6px -1px rgb(0 0 0/.1),0 2px 4px -2px rgb(0 0 0/.1)}
+header{margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:16px}
+h1{margin:0 0 8px;font-size:24px} .subtitle{margin:0;color:var(--text-muted);font-size:14px}
+.grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:768px){.grid{grid-template-columns:1fr 1fr}}
+.control-panel,.visualizer-panel{display:flex;flex-direction:column;gap:16px}
+.control-group{background:var(--bg-app);padding:16px;border-radius:8px;border:1px solid var(--border)}
+label{display:block;font-weight:600;margin-bottom:8px;font-size:14px}
+.slider-container{display:flex;align-items:center;gap:12px}
+input[type=range]{flex:1;height:7px;accent-color:var(--primary);cursor:pointer}
+.value-display{font-weight:bold;min-width:60px;text-align:right}
+.constant-banner{font-size:12px;background:#eff6ff;color:var(--primary);padding:10px 12px;border-radius:6px;font-weight:500;text-align:center}
+.canvas-container{background:#1e293b;border-radius:8px;height:310px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.building-shape{background:rgba(59,130,246,.2);border:3px solid var(--primary);position:relative;display:flex;align-items:center;justify-content:center;transition:width .15s,height .15s}
+.building-core{background:rgba(220,38,38,.42);border:1px dashed var(--danger);position:absolute}
+.window{position:absolute;background:#fbbf24;border-radius:2px}
+.legend{position:absolute;top:10px;left:12px;color:#cbd5e1;font-size:11px}
+.metrics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.metric-card{background:var(--bg-app);padding:12px;border-radius:8px;border:1px solid var(--border);text-align:center}
+.metric-label{font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;margin-bottom:4px}
+.metric-value{font-size:19px;font-weight:700}
+.indicator-pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;margin-top:4px}
+.pill-good{background:#dcfce7;color:var(--success)} .pill-warn{background:#ffedd5;color:var(--warning)} .pill-bad{background:#fee2e2;color:var(--danger)}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:#fff;border:1px solid var(--border);padding:10px;border-radius:6px;margin-top:10px}
+.takeaway{padding:14px;border-left:4px solid var(--primary);background:#eff6ff;font-size:13px}
+ul{margin:0;padding-left:20px;color:var(--text-muted);display:flex;flex-direction:column;gap:6px}
+.small{font-size:12px;color:var(--text-muted)}
+</style>
+<link rel="stylesheet" href="lab-shell.css">
+<meta name="description" content="Building Massing classroom activity, with calculations and stated teaching assumptions. Sustainable Construction Lab by Dr. Omprakash Ramalingam Rethnam.">
+</head>
+<body class="lab-page"><header class="lab-header"><div class="lab-header-inner"><a class="lab-brand" href="../index.html">ORR / Teaching</a><nav aria-label="Teaching navigation"><a href="index.html">All activities</a><a href="#calculate">Hand calculation</a><button class="lab-theme" id="labTheme" type="button">Dark theme</button></nav></div></header>
+<div class="container">
+<header>
+<h1>Building Massing & Form Simulator</h1>
+<p class="subtitle">Classroom demonstration tool exploring the fundamental trade-offs of architectural geometry.</p>
+</header>
+
+<div class="grid">
+<div class="control-panel">
+<div class="constant-banner">🔒 <strong>CONTROL VARIABLE:</strong> Total Floor Area = 400 m² &nbsp;|&nbsp; Height = 3 m &nbsp;|&nbsp; Volume = 1,200 m³</div>
+
+<div class="control-group">
+<label for="shapeSlider">Building Form Manipulation</label>
+<div class="slider-container">
+<span>Compact</span>
+<input type="range" id="shapeSlider" min="10" max="40" value="20" step="1">
+<span>Sprawling</span>
+</div>
+<div style="font-size:13px;color:var(--text-muted);margin-top:8px;text-align:center">
+Current Dimensions: <span id="dimDisplay" style="font-weight:600;color:var(--text-main)">20m × 20m</span>
+</div>
+</div>
+
+<div class="control-group" style="font-size:14px">
+<label>Physics & Behaviour Checklist</label>
+<ul>
+<li><strong>Heat Loss:</strong> Driven by total exposed envelope surface area.</li>
+<li><strong>Daylight:</strong> Areas deeper than 5 m from an external wall are treated as a Deep-plan Zone.</li>
+<li><strong>Cross Ventilation:</strong> The shorter plan dimension is compared with an illustrative 12 m depth. This is not a ventilation performance test.</li>
+</ul>
+</div>
+
+<div class="control-group">
+<label>Calculation Details</label>
+<div id="formulaBox" class="formula"></div>
+</div>
+
+<div id="takeaway" class="takeaway"></div>
+</div>
+
+<div class="visualizer-panel">
+<div class="canvas-container">
+<div class="legend">🔵 Building envelope &nbsp;&nbsp; 🔴 Deep-plan core &nbsp;&nbsp; 🟨 Window zone</div>
+<div id="buildingPoly" class="building-shape"><div id="buildingCore" class="building-core"></div></div>
+<div style="position:absolute;bottom:8px;right:12px;color:#94a3b8;font-size:11px;font-weight:500">Top-Down Architectural View</div>
+</div>
+
+<div class="metrics-grid">
+<div class="metric-card"><div class="metric-label">S/V Ratio</div><div id="svValue" class="metric-value">0.533</div><div id="svStatus" class="indicator-pill pill-good">Efficient</div></div>
+<div class="metric-card"><div class="metric-label">Exposed Skin Area</div><div id="saValue" class="metric-value">640 m²</div><div id="saStatus" class="indicator-pill pill-good">Lower Exposure</div></div>
+<div class="metric-card"><div class="metric-label">Deep-plan Zone Core</div><div id="daylightValue" class="metric-value">25%</div><div id="daylightStatus" class="indicator-pill pill-warn">Beyond assumed reach</div></div>
+<div class="metric-card"><div class="metric-label">Cross Vent Potential</div><div id="ventValue" class="metric-value">Blocked</div><div id="ventStatus" class="indicator-pill pill-bad">Beyond 12 m</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<section class="container massing-worksheet" id="calculate"><h2>Calculate the form by hand</h2><p>For a 20 m × 20 m building, 3 m high, calculate the roof area, external wall area, enclosed volume and exposed surface-to-volume ratio. Exposed area here excludes the ground floor.</p><details><summary>Reveal worked calculation</summary><p>Roof = 20 × 20 = 400 m²<br>Walls = 2 × (20 + 20) × 3 = 240 m²<br>Exposed area = 400 + 240 = 640 m²<br>Volume = 400 × 3 = 1,200 m³<br>S/V = 640 / 1,200 = 0.533 m⁻¹</p><p>Now compare 40 m × 10 m: roof = 400 m²; walls = 300 m²; exposed area = 700 m²; volume = 1,200 m³; S/V = 0.583 m⁻¹.</p></details><p class="small">The 5 m daylight reach and 12 m ventilation depth are illustrative assumptions. Actual performance depends on glazing, orientation, wind, obstructions and detailed design. Greater envelope area only implies greater transmission heat flow when the relevant U-values and temperature differences are comparable.</p></section>
+
+<script>
+const TARGET_AREA=400, HEIGHT=3, VOLUME=1200, DAYLIGHT_DEPTH=5, VENT_LIMIT=12;
+const slider=document.getElementById("shapeSlider");
+const dimDisplay=document.getElementById("dimDisplay");
+const buildingPoly=document.getElementById("buildingPoly");
+const buildingCore=document.getElementById("buildingCore");
+
+function setPill(el,text,type){
+ el.textContent=text;
+ el.className="indicator-pill "+(type==="good"?"pill-good":type==="warn"?"pill-warn":"pill-bad");
+}
+
+function updateSimulation(){
+ const length=parseFloat(slider.value);
+ const width=TARGET_AREA/length;
+
+ // Envelope: roof + four external walls
+ const roof=TARGET_AREA;
+ const walls=2*(length+width)*HEIGHT;
+ const sa=roof+walls;
+ const sv=sa/VOLUME;
+
+ // Deep-plan zone exists only where both dimensions exceed 2 x daylight depth.
+ const darkLength=Math.max(0,length-2*DAYLIGHT_DEPTH);
+ const darkWidth=Math.max(0,width-2*DAYLIGHT_DEPTH);
+ const darkArea=darkLength*darkWidth;
+ const darkPct=darkArea/TARGET_AREA*100;
+
+ // Cross ventilation is checked across the narrower building dimension.
+ const ventPass=Math.min(length,width)<=VENT_LIMIT;
+
+ dimDisplay.textContent=`${length.toFixed(1)} m × ${width.toFixed(1)} m`;
+
+ document.getElementById("svValue").textContent=sv.toFixed(3);
+ setPill(document.getElementById("svStatus"),sv<=0.55?"Efficient":sv<=0.65?"Moderate":"Higher Exposure",sv<=0.55?"good":sv<=0.65?"warn":"bad");
+
+ document.getElementById("saValue").textContent=`${sa.toFixed(0)} m²`;
+ setPill(document.getElementById("saStatus"),sa<=650?"Lower Exposure":sa<=700?"Moderate":"Higher Exposure",sa<=650?"good":sa<=700?"warn":"bad");
+
+ document.getElementById("daylightValue").textContent=`${darkPct.toFixed(0)}%`;
+ setPill(document.getElementById("daylightStatus"),darkPct===0?"No deep-plan core":"Beyond assumed reach",darkPct===0?"good":"warn");
+
+ document.getElementById("ventValue").textContent=ventPass?"Within depth":"Beyond depth";
+ setPill(document.getElementById("ventStatus"),ventPass?"≤ 12 m":" > 12 m",ventPass?"good":"bad");
+
+ document.getElementById("formulaBox").innerHTML=
+ `Roof = ${roof.toFixed(0)} m²<br>`+
+ `Walls = 2 × (${length.toFixed(1)} + ${width.toFixed(1)}) × 3 = ${walls.toFixed(1)} m²<br>`+
+ `<strong>Surface Area = ${sa.toFixed(1)} m²</strong><br>`+
+ `S/V = ${sa.toFixed(1)} ÷ 1,200 = <strong>${sv.toFixed(3)}</strong><br>`+
+ `Dark Core = ${darkLength.toFixed(1)} × ${darkWidth.toFixed(1)} = <strong>${darkArea.toFixed(1)} m²</strong>`;
+
+ document.getElementById("takeaway").innerHTML=
+ `<strong>Current interpretation:</strong> `+
+ (darkPct===0
+ ? "The 5 m daylight zones meet across the building, so the simplified model has no Deep-plan Zone."
+ : `${darkPct.toFixed(0)}% of the floor area lies beyond the assumed 5 m daylight reach.`)+
+ ` ${ventPass?"The narrow dimension is within the 12 m cross-ventilation rule.":"The narrow dimension exceeds 12 m, so the simplified cross-ventilation check fails."}`;
+
+ // Scale the footprint to fit the visual canvas while preserving proportions.
+ const maxW=Math.max(120,buildingPoly.parentElement.clientWidth-36),maxH=220;
+ const scale=Math.min(maxW/length,maxH/width);
+ const displayW=Math.max(70,length*scale);
+ const displayH=Math.max(45,width*scale);
+ buildingPoly.style.width=displayW+"px";
+ buildingPoly.style.height=displayH+"px";
+
+ // Dark core shown at 5 m from each edge.
+ const coreW=Math.max(0,displayW*(darkLength/length));
+ const coreH=Math.max(0,displayH*(darkWidth/width));
+ buildingCore.style.width=coreW+"px";
+ buildingCore.style.height=coreH+"px";
+ buildingCore.style.left=(displayW-coreW)/2+"px";
+ buildingCore.style.top=(displayH-coreH)/2+"px";
+}
+
+slider.addEventListener("input",updateSimulation);
+updateSimulation();
+new ResizeObserver(updateSimulation).observe(buildingPoly.parentElement);
+</script>
+<footer class="lab-footer"><div class="lab-footer-inner"><span>Dr. Omprakash Ramalingam Rethnam · TU Dublin</span><a href="thermal-mass.html">Next: Thermal mass →</a><a href="index.html">All activities</a></div></footer><script src="lab-navigation.js"></script></body>
+</html>
