@@ -55,3 +55,5 @@
 .heat-pump-art { flex: 0 0 300px; background: var(--hero-bg); border-radius: 10px; padding: 12px; }
 .heat-pump-art svg { display: block; width: 100%; height: auto; }
 @media (max-width: 900px) { .heat-pump-art { flex: none; width: min(100%, 360px); } }
+
+#activities, #building-services, #worked-example { scroll-margin-top: 150px; }

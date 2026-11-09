@@ -16,4 +16,3 @@ The classroom models are illustrative, not compliance or design-sizing tools. Ke
 Manual checks: open each activity from the hub, change its primary control, reveal answers, preview printing, toggle the theme, and return to the hub. Test narrow mobile layouts as well as desktop. The shading exercise's first step is 27.7408°C; the thermal-mass hand exercise gives 20.122°C and 20.732°C. The massing activity uses the smaller plan dimension for its illustrative ventilation check.
 
 Deployment continues through the existing GitHub Pages workflow on `master`; no hosting configuration changes are needed.
-
