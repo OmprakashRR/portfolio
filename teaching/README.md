@@ -1,8 +1,9 @@
-# Sustainable Construction Lab
+# Building Sustainability & Services Lab
 
 The public entry point is `teaching/index.html`, linked from the portfolio's Teaching section and footer. All links are relative so GitHub Pages' `/portfolio/` project path works without a build step.
 
 Activities:
+- `air-source-heat-pump/`: supplied R290 cycle animation for CONS 3008 Building Services, with stage explanations and a COP calculation. The web copy adds portfolio navigation, a scrollable reference table and reduced-motion support.
 - `building-massing.html`: fixed-area plan geometry, envelope area, and illustrative daylight/ventilation checks.
 - `thermal-mass.html`: lumped room heat-capacity comparison, solar input, shading and night ventilation, with a worksheet.
 - `shading-ventilation.html`: overhang shadow geometry, solar gains, wind-driven airflow, and a first-step energy balance.
@@ -15,3 +16,4 @@ The classroom models are illustrative, not compliance or design-sizing tools. Ke
 Manual checks: open each activity from the hub, change its primary control, reveal answers, preview printing, toggle the theme, and return to the hub. Test narrow mobile layouts as well as desktop. The shading exercise's first step is 27.7408°C; the thermal-mass hand exercise gives 20.122°C and 20.732°C. The massing activity uses the smaller plan dimension for its illustrative ventilation check.
 
 Deployment continues through the existing GitHub Pages workflow on `master`; no hosting configuration changes are needed.
+
