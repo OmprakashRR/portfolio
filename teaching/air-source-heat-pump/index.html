@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Air-Source Heat Pump Animation | Building Services | Dr. Omprakash Ramalingam Rethnam</title>
+<meta name="description" content="Interactive R290 air-source heat pump teaching animation for CONS 3008 Building Services. Follow the evaporator, compressor, condenser and expansion valve, with stage explanations and a COP calculation.">
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-border: #334155;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --cold: #38bdf8;
+    --cold-bg: rgba(56, 189, 248, 0.14);
+    --hot: #f97316;
+    --hot-bg: rgba(249, 115, 22, 0.14);
+    --accent: #22c55e;
+    --elec: #eab308;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  header p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-top: 2px;
+  }
+  .badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: #0f172a;
+    border: 1px solid var(--card-border);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+  .badge span { color: var(--accent); font-size: 1.05rem; }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+  }
+  button {
+    background: #334155;
+    color: #fff;
+    border: 1px solid #475569;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  button:hover { background: #475569; }
+  button.primary { background: #2563eb; border-color: #3b82f6; }
+  button.primary:hover { background: #1d4ed8; }
+  button.active-step {
+    background: #0ea5e9;
+    border-color: #38bdf8;
+    color: #0f172a;
+  }
+  .speed-control {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 920px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  .canvas-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+    border-radius: 10px;
+    background: #0b1120;
+    border: 1px solid #1e293b;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+  .details-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 12px;
+  }
+  .stage-tag {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+  .tag-cold { background: var(--cold-bg); color: var(--cold); border: 1px solid rgba(56,189,248,0.4); }
+  .tag-hot { background: var(--hot-bg); color: var(--hot); border: 1px solid rgba(249,115,22,0.4); }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .metric-box {
+    background: #0f172a;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 12px;
+  }
+  .metric-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; }
+  .metric-val { font-size: 1.15rem; font-weight: 700; margin-top: 3px; }
+
+  .formula-box {
+    background: #0f172a;
+    border-left: 4px solid #38bdf8;
+    padding: 14px;
+    border-radius: 8px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.92rem;
+    color: #e2e8f0;
+  }
+  .explanation-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.94rem;
+  }
+  .explanation-list li {
+    padding-left: 18px;
+    position: relative;
+  }
+  .explanation-list li::before {
+    content: "•";
+    color: #38bdf8;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    font-size: 0.9rem;
+  }
+  .summary-table th, .summary-table td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .summary-table th {
+    background: #0f172a;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .summary-table tr.highlight-row {
+    background: rgba(56, 189, 248, 0.12);
+  }
+  .comp-box { cursor: pointer; transition: opacity 0.2s; }
+  .comp-box:hover { opacity: 0.92; }
+  .teaching-nav { max-width:1180px; margin:0 auto 18px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; font-size:.9rem; }
+  .teaching-nav a, .teaching-footer a { color:#7dd3fc; text-decoration:none; }
+  .teaching-nav a:hover, .teaching-footer a:hover { text-decoration:underline; }
+  .teaching-module { color:var(--muted); font-size:.8rem; letter-spacing:.03em; }
+  a:focus-visible, button:focus-visible, input:focus-visible, .table-scroll:focus-visible { outline:3px solid #7dd3fc; outline-offset:4px; }
+  .teaching-note { color:var(--muted); margin:0 0 18px; font-size:.85rem; }
+  .table-scroll { overflow-x:auto; margin-top:20px; border-radius:12px; }
+  .table-scroll .summary-table { margin-top:0; min-width:740px; }
+  .teaching-footer { max-width:1180px; margin:24px auto 0; display:flex; gap:12px; justify-content:space-between; flex-wrap:wrap; color:var(--muted); font-size:.85rem; border-top:1px solid var(--card-border); padding-top:18px; }
+  @media(max-width:560px) { body { padding:14px; } header { padding:16px; } .badge { padding:7px 10px; } }
+</style>
+</head>
+<body>
+<nav class="teaching-nav" aria-label="Teaching navigation"><a href="../">← All teaching activities</a><span class="teaching-module">CONS 3008 · Construction Technology 3C: Building Services</span><a href="../../index.html#teaching">Portfolio teaching section →</a></nav>
+<div class="container">
+  <header>
+    <div>
+      <h1>8 kW R290 Air Source Heat Pump Cycle</h1>
+      <p>Operating Condition: -5°C Outside Air | +45°C Heating Water | Flow Rate: 0.0285 kg/s (28.5 g/s)</p>
+    </div>
+    <div class="badges">
+      <div class="badge">Free Air Heat: <span>5.7 kW</span></div>
+      <div class="badge">Electricity In: <span style="color:#eab308;">2.3 kW</span></div>
+      <div class="badge">Heat Out: <span style="color:#f97316;">8.0 kW</span></div>
+      <div class="badge">COP: <span>3.48 (3.5)</span></div>
+    </div>
+  </header>
+
+  <p class="teaching-note">An illustrative 8 kW operating point for teaching. Select a component to follow the refrigerant state and energy transfer; pause the flow to discuss each stage. The flow-speed control changes the animation speed.</p>
+  <div class="controls">
+    <button id="playBtn" class="primary" onclick="togglePlay()">Pause Animation</button>
+    <button id="btn0" onclick="selectStage(0)">1. Outdoor Evaporator</button>
+    <button id="btn1" onclick="selectStage(1)">2. Compressor</button>
+    <button id="btn2" onclick="selectStage(2)">3. Indoor Condenser</button>
+    <button id="btn3" onclick="selectStage(3)">4. Expansion Valve</button>
+    <div class="speed-control">
+      <label for="speedRange">Flow Speed:</label>
+      <input id="speedRange" type="range" min="0.4" max="2.5" step="0.1" value="1.0" oninput="updateSpeed(this.value)">
+      <span id="speedVal">1.0x</span>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <div class="canvas-card">
+      <svg id="cycleSvg" viewBox="0 0 760 500" role="img" aria-labelledby="cycleTitle cycleDesc"><title id="cycleTitle">R290 air-source heat pump refrigerant cycle</title><desc id="cycleDesc">The outdoor evaporator absorbs heat, the compressor adds electrical work, the condenser transfers heat to heating water, and the expansion valve reduces refrigerant pressure. The stage buttons provide explanations.</desc>
+        <!-- Zone Dividers -->
+        <rect x="14" y="14" width="356" height="472" rx="12" fill="rgba(56,189,248,0.04)" stroke="rgba(56,189,248,0.22)" stroke-dasharray="6,6"/>
+        <text x="30" y="38" fill="#38bdf8" font-size="13" font-weight="700">LOW-PRESSURE COLD SIDE (2.4 bar)</text>
+
+        <rect x="390" y="14" width="356" height="472" rx="12" fill="rgba(249,115,22,0.04)" stroke="rgba(249,115,22,0.22)" stroke-dasharray="6,6"/>
+        <text x="530" y="38" fill="#f97316" font-size="13" font-weight="700">HIGH-PRESSURE HOT SIDE (17.0 bar)</text>
+
+        <!-- Pipe Loop Paths -->
+        <!-- Left pipe: Expansion valve (bottom) up through Evaporator to Compressor (top) -->
+        <path d="M 380 415 L 145 415 L 145 95 L 380 95" fill="none" stroke="#1e293b" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 380 415 L 145 415 L 145 95 L 380 95" fill="none" stroke="#38bdf8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Right pipe: Compressor (top) down through Condenser to Expansion valve (bottom) -->
+        <path d="M 380 95 L 615 95 L 615 415 L 380 415" fill="none" stroke="#1e293b" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 380 95 L 615 95 L 615 415 L 380 415" fill="none" stroke="#f97316" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Outdoor Air Heat Arrow into Evaporator -->
+        <g transform="translate(20, 215)">
+          <rect x="0" y="0" width="90" height="72" rx="8" fill="rgba(56,189,248,0.12)" stroke="#38bdf8"/>
+          <text x="45" y="22" text-anchor="middle" fill="#e0f2fe" font-size="12" font-weight="700">Outside Air</text>
+          <text x="45" y="40" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="700">-5°C</text>
+          <text x="45" y="58" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">+5.7 kW In</text>
+          <path d="M 94 36 L 116 36" stroke="#22c55e" stroke-width="3" marker-end="url(#arrowGreen)"/>
+        </g>
+
+        <!-- Indoor Water Heat Arrow out of Condenser -->
+        <g transform="translate(650, 215)">
+          <rect x="0" y="0" width="92" height="72" rx="8" fill="rgba(249,115,22,0.12)" stroke="#f97316"/>
+          <text x="46" y="22" text-anchor="middle" fill="#ffedd5" font-size="12" font-weight="700">House Water</text>
+          <text x="46" y="40" text-anchor="middle" fill="#f97316" font-size="13" font-weight="700">40°C → 45°C</text>
+          <text x="46" y="58" text-anchor="middle" fill="#f97316" font-size="12" font-weight="700">8.0 kW Out</text>
+          <path d="M -26 36 L -4 36" stroke="#f97316" stroke-width="3"/>
+        </g>
+
+        <!-- Component 1: Outdoor Evaporator -->
+        <g id="comp0" class="comp-box" onclick="selectStage(0)" transform="translate(105, 165)">
+          <rect id="box0" x="0" y="0" width="80" height="170" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+          <path d="M 20 25 L 60 45 L 20 65 L 60 85 L 20 105 L 60 125 L 20 145" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+          <text x="40" y="-10" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1. EVAPORATOR</text>
+        </g>
+
+        <!-- Component 2: Compressor (Top) -->
+        <g id="comp1" class="comp-box" onclick="selectStage(1)" transform="translate(320, 52)">
+          <rect id="box1" x="0" y="0" width="120" height="86" rx="14" fill="#0f172a" stroke="#eab308" stroke-width="3"/>
+          <circle cx="60" cy="43" r="24" fill="rgba(234,179,8,0.15)" stroke="#eab308" stroke-width="3"/>
+          <text x="60" y="48" text-anchor="middle" fill="#fde047" font-size="12" font-weight="700">+2.3 kW</text>
+          <text x="60" y="-8" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2. COMPRESSOR</text>
+        </g>
+
+        <!-- Component 3: Indoor Condenser (Right) -->
+        <g id="comp2" class="comp-box" onclick="selectStage(2)" transform="translate(575, 165)">
+          <rect id="box2" x="0" y="0" width="80" height="170" rx="12" fill="#0f172a" stroke="#f97316" stroke-width="3"/>
+          <path d="M 20 25 L 60 45 L 20 65 L 60 85 L 20 105 L 60 125 L 20 145" fill="none" stroke="#f97316" stroke-width="4" stroke-linecap="round"/>
+          <text x="40" y="-10" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3. CONDENSER</text>
+        </g>
+
+        <!-- Component 4: Expansion Valve (Bottom) -->
+        <g id="comp3" class="comp-box" onclick="selectStage(3)" transform="translate(325, 375)">
+          <rect id="box3" x="0" y="0" width="110" height="80" rx="14" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+          <polygon points="30,22 55,40 30,58" fill="#f97316"/>
+          <polygon points="80,22 55,40 80,58" fill="#38bdf8"/>
+          <text x="55" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4. EXPANSION VALVE</text>
+        </g>
+
+        <!-- State Readout Callouts on Corners -->
+        <!-- Bottom Left (Evap Inlet) -->
+        <g transform="translate(165, 352)">
+          <rect x="0" y="0" width="142" height="50" rx="8" fill="#0f172a" stroke="#334155"/>
+          <text x="10" y="20" fill="#38bdf8" font-size="12" font-weight="700">2.4 bar | -15°C</text>
+          <text x="10" y="38" fill="#94a3b8" font-size="11">Cold Liquid-Vapour Mix</text>
+        </g>
+
+        <!-- Top Left (Comp Inlet) -->
+        <g transform="translate(165, 110)">
+          <rect x="0" y="0" width="142" height="50" rx="8" fill="#0f172a" stroke="#334155"/>
+          <text x="10" y="20" fill="#38bdf8" font-size="12" font-weight="700">2.4 bar | -10°C (263 K)</text>
+          <text x="10" y="38" fill="#94a3b8" font-size="11">Low-P Gas | Vol = 5.35 L</text>
+        </g>
+
+        <!-- Top Right (Comp Outlet) -->
+        <g transform="translate(452, 110)">
+          <rect x="0" y="0" width="148" height="50" rx="8" fill="#0f172a" stroke="#334155"/>
+          <text x="10" y="20" fill="#f97316" font-size="12" font-weight="700">17.0 bar | +75°C (348 K)</text>
+          <text x="10" y="38" fill="#94a3b8" font-size="11">Hot Gas | Vol = 1.00 L</text>
+        </g>
+
+        <!-- Bottom Right (Cond Outlet) -->
+        <g transform="translate(452, 352)">
+          <rect x="0" y="0" width="148" height="50" rx="8" fill="#0f172a" stroke="#334155"/>
+          <text x="10" y="20" fill="#f97316" font-size="12" font-weight="700">17.0 bar | +45°C (318 K)</text>
+          <text x="10" y="38" fill="#94a3b8" font-size="11">Warm High-P Liquid</text>
+        </g>
+
+        <!-- Animated Refrigerant Particles Layer -->
+        <g id="particlesLayer"></g>
+      </svg>
+
+      <div class="legend">
+        <div class="legend-item"><span class="dot" style="background:#38bdf8;"></span> Cold Low-Pressure R290 (2.4 bar)</div>
+        <div class="legend-item"><span class="dot" style="background:#f97316;"></span> Hot High-Pressure R290 (17.0 bar)</div>
+        <div class="legend-item"><span class="dot" style="background:#eab308;"></span> Compressor Work (+2.3 kW)</div>
+      </div>
+    </div>
+
+    <!-- Right Details Panel -->
+    <div class="details-card">
+      <div class="stage-header">
+        <h2 id="stageTitle" style="font-size:1.2rem;">1. Outdoor Evaporator</h2>
+        <span id="stageTag" class="stage-tag tag-cold">Low Pressure: 2.4 bar</span>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-label">Entering State</div>
+          <div id="mIn" class="metric-val" style="color:#38bdf8;">2.4 bar | -15°C</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Leaving State</div>
+          <div id="mOut" class="metric-val" style="color:#38bdf8;">2.4 bar | -10°C (5.35 L)</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Energy Transfer</div>
+          <div id="mEnergy" class="metric-val" style="color:#22c55e;">+5.7 kW from Air</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Refrigerant Phase</div>
+          <div id="mPhase" class="metric-val">Liquid → Low-P Gas</div>
+        </div>
+      </div>
+
+      <div id="formulaBox" class="formula-box">
+        Q_air = ṁ × L_usable = 0.0285 kg/s × 200 kJ/kg = 5.7 kW
+      </div>
+
+      <ul id="explanationList" class="explanation-list">
+        <li>Enters at 2.4 bar and -15°C as a cold liquid-vapour mix.</li>
+        <li>Because -5°C outside air is 10°C warmer than the refrigerant, heat flows into the coil and boils the liquid.</li>
+        <li>Leaves as a low-pressure gas at 2.4 bar, -10°C (263 K), expanding to 5.35 litres per cycle.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Full Reference Summary Table -->
+  <div class="table-scroll" role="region" aria-label="Heat pump cycle reference table, scroll horizontally on small screens" tabindex="0">
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Component</th>
+        <th>Inlet State</th>
+        <th>Outlet State</th>
+        <th>Energy &amp; Key Physics</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="row0" class="highlight-row">
+        <td><strong>Step 1</strong></td>
+        <td>Outdoor Evaporator</td>
+        <td>2.4 bar, -15°C (Mix)</td>
+        <td>2.4 bar, -10°C (Gas, 5.35 L)</td>
+        <td>Absorbs <strong>5.7 kW</strong> free heat from -5°C outdoor air (Latent Heat)</td>
+      </tr>
+      <tr id="row1">
+        <td><strong>Step 2</strong></td>
+        <td>Compressor</td>
+        <td>2.4 bar, -10°C (263 K, 5.35 L)</td>
+        <td>17.0 bar, +75°C (348 K, 1.00 L)</td>
+        <td>Uses <strong>2.3 kW</strong> electricity; Combined Gas Law spikes temp to +75°C</td>
+      </tr>
+      <tr id="row2">
+        <td><strong>Step 3</strong></td>
+        <td>Indoor Condenser</td>
+        <td>17.0 bar, +75°C (Hot Gas)</td>
+        <td>17.0 bar, +45°C (Liquid)</td>
+        <td>Delivers <strong>8.0 kW</strong> (5.7 + 2.3 kW) to 40°C→45°C water (<strong>COP = 3.5</strong>)</td>
+      </tr>
+      <tr id="row3">
+        <td><strong>Step 4</strong></td>
+        <td>Expansion Valve</td>
+        <td>17.0 bar, +45°C (Liquid)</td>
+        <td>2.4 bar, -15°C (Mix)</td>
+        <td>Drops pressure 7×; 48% flash-boils to self-cool back to -15°C</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<footer class="teaching-footer"><span>Dr. Omprakash Ramalingam Rethnam · TU Dublin</span><a href="../">Back to the teaching lab →</a></footer>
+<script>
+const stages = [
+  {
+    title: "1. Outdoor Evaporator (Absorbing Free Heat)",
+    tag: "Low Pressure: 2.4 bar",
+    tagClass: "stage-tag tag-cold",
+    mIn: "2.4 bar | -15°C",
+    mInColor: "#38bdf8",
+    mOut: "2.4 bar | -10°C (5.35 L)",
+    mOutColor: "#38bdf8",
+    mEnergy: "+5.7 kW from -5°C Air",
+    mEnergyColor: "#22c55e",
+    mPhase: "Liquid-Mix → Gas",
+    formula: "Latent Heat: Q_air = 0.0285 kg/s × 200 kJ/kg = 5.7 kW",
+    bullets: [
+      "Enters at 2.4 bar and -15°C as a cold liquid-vapour mixture.",
+      "Warmer -5°C outside air blows across the coil, transferring 5.7 kW of free thermal energy to boil the liquid.",
+      "Leaves as low-pressure gas at 2.4 bar, -10°C (263 K), occupying 5.35 litres."
+    ]
+  },
+  {
+    title: "2. Compressor (Squeezing Pressure & Temp)",
+    tag: "Pressure Boost: 2.4 → 17.0 bar",
+    tagClass: "stage-tag tag-hot",
+    mIn: "2.4 bar | -10°C (5.35 L)",
+    mInColor: "#38bdf8",
+    mOut: "17.0 bar | +75°C (1.00 L)",
+    mOutColor: "#f97316",
+    mEnergy: "+2.3 kW Electricity In",
+    mEnergyColor: "#eab308",
+    mPhase: "Low-P Gas → Hot Gas",
+    formula: "Combined Gas Law: T2 = (17.0 × 1.00 × 263 K) ÷ (2.4 × 5.35) = 348 K (+75°C)",
+    bullets: [
+      "Uses 2.3 kW of electrical power to squeeze 5.35 litres of gas down into 1.00 litre at 17.0 bar.",
+      "Squeezing the gas 7× higher forces its temperature to jump from -10°C (263 K) up to +75°C (348 K).",
+      "Carries both the 5.7 kW of captured air heat and 2.3 kW of compression heat forward."
+    ]
+  },
+  {
+    title: "3. Indoor Condenser (Heating Your Water)",
+    tag: "High Pressure: 17.0 bar",
+    tagClass: "stage-tag tag-hot",
+    mIn: "17.0 bar | +75°C",
+    mInColor: "#f97316",
+    mOut: "17.0 bar | +45°C",
+    mOutColor: "#f97316",
+    mEnergy: "8.0 kW to House Water",
+    mEnergyColor: "#f97316",
+    mPhase: "Hot Gas → Warm Liquid",
+    formula: "COP = Total Heat Out ÷ Electricity In = 8.0 kW ÷ 2.3 kW = 3.48 (3.5)",
+    bullets: [
+      "Superheated +75°C gas transfers heat into your 40°C return water loop, warming it to +45°C.",
+      "Delivers 8.0 kW total heat (5.7 kW free air heat + 2.3 kW electricity) for a COP of 3.5.",
+      "Losing that heat causes the R290 to condense back into a warm liquid at 17.0 bar and +45°C."
+    ]
+  },
+  {
+    title: "4. Expansion Valve (Pressure & Temp Drop)",
+    tag: "Pressure Drop: 17.0 → 2.4 bar",
+    tagClass: "stage-tag tag-cold",
+    mIn: "17.0 bar | +45°C",
+    mInColor: "#f97316",
+    mOut: "2.4 bar | -15°C",
+    mOutColor: "#38bdf8",
+    mEnergy: "Self-Cooling (Flash)",
+    mEnergyColor: "#38bdf8",
+    mPhase: "Warm Liquid → Cold Mix",
+    formula: "Flash Evaporation: 48% boils instantly, stealing heat to chill remaining liquid to -15°C",
+    bullets: [
+      "The tiny electronic valve drops pressure sharply from 17.0 bar back down to 2.4 bar.",
+      "At 2.4 bar, R290's boiling point drops to -15°C, so 48% of the warm liquid immediately flashes into vapour.",
+      "Because no outside heat enters the valve, it steals heat from itself—plunging to -15°C ready for Step 1."
+    ]
+  }
+];
+
+let currentStage = 0;
+let playing = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let speed = 1.0;
+
+function selectStage(idx) {
+  currentStage = idx;
+  const s = stages[idx];
+  document.getElementById("stageTitle").textContent = s.title;
+  const tag = document.getElementById("stageTag");
+  tag.textContent = s.tag;
+  tag.className = s.tagClass;
+
+  const mIn = document.getElementById("mIn");
+  mIn.textContent = s.mIn;
+  mIn.style.color = s.mInColor;
+
+  const mOut = document.getElementById("mOut");
+  mOut.textContent = s.mOut;
+  mOut.style.color = s.mOutColor;
+
+  const mEnergy = document.getElementById("mEnergy");
+  mEnergy.textContent = s.mEnergy;
+  mEnergy.style.color = s.mEnergyColor;
+
+  document.getElementById("mPhase").textContent = s.mPhase;
+  document.getElementById("formulaBox").textContent = s.formula;
+
+  const ul = document.getElementById("explanationList");
+  ul.innerHTML = s.bullets.map(b => `<li>${b}</li>`).join("");
+
+  for (let i = 0; i < 4; i++) {
+    document.getElementById("btn" + i).className = (i === idx) ? "active-step" : "";
+    document.getElementById("row" + i).className = (i === idx) ? "highlight-row" : "";
+    document.getElementById("box" + i).setAttribute("stroke-width", (i === idx) ? "5" : "2.5");
+  }
+}
+
+function togglePlay() {
+  playing = !playing;
+  document.getElementById("playBtn").setAttribute("aria-pressed", String(playing));
+  document.getElementById("playBtn").textContent = playing ? "Pause Animation" : "Play Animation";
+}
+
+function updateSpeed(val) {
+  speed = parseFloat(val);
+  document.getElementById("speedVal").textContent = speed.toFixed(1) + "x";
+}
+
+// Loop coordinates (clockwise starting from bottom center expansion valve)
+// Bottom-left: (145, 415) -> Top-left: (145, 95) -> Top-right: (615, 95) -> Bottom-right: (615, 415)
+const waypoints = [
+  { x: 380, y: 415 }, // 0: Valve outlet
+  { x: 145, y: 415 }, // 1: Bottom-left corner
+  { x: 145, y: 95 },  // 2: Top-left corner (through Evaporator)
+  { x: 380, y: 95 },  // 3: Compressor
+  { x: 615, y: 95 },  // 4: Top-right corner
+  { x: 615, y: 415 }, // 5: Bottom-right corner (through Condenser)
+  { x: 380, y: 415 }  // 6: Back to Valve
+];
+
+// Compute cumulative distances
+const segLengths = [];
+let totalLength = 0;
+for (let i = 0; i < waypoints.length - 1; i++) {
+  const dx = waypoints[i+1].x - waypoints[i].x;
+  const dy = waypoints[i+1].y - waypoints[i].y;
+  const len = Math.hypot(dx, dy);
+  segLengths.push(len);
+  totalLength += len;
+}
+
+const numParticles = 18;
+const particles = [];
+const layer = document.getElementById("particlesLayer");
+
+for (let i = 0; i < numParticles; i++) {
+  const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  c.setAttribute("r", "6");
+  layer.appendChild(c);
+  particles.push({ el: c, dist: (i / numParticles) * totalLength });
+}
+
+function getPointAtDist(d) {
+  let rem = d % totalLength;
+  for (let i = 0; i < segLengths.length; i++) {
+    if (rem <= segLengths[i]) {
+      const t = rem / segLengths[i];
+      const x = waypoints[i].x + (waypoints[i+1].x - waypoints[i].x) * t;
+      const y = waypoints[i].y + (waypoints[i+1].y - waypoints[i].y) * t;
+      return { x, y, seg: i };
+    }
+    rem -= segLengths[i];
+  }
+  return { x: waypoints[0].x, y: waypoints[0].y, seg: 0 };
+}
+
+let lastTime = performance.now();
+function animate(now) {
+  const dt = (now - lastTime) / 1000;
+  lastTime = now;
+
+  if (playing) {
+    const pxPerSec = 130 * speed;
+    for (const p of particles) {
+      p.dist = (p.dist + pxPerSec * dt) % totalLength;
+      const pos = getPointAtDist(p.dist);
+      p.el.setAttribute("cx", pos.x.toFixed(1));
+      p.el.setAttribute("cy", pos.y.toFixed(1));
+
+      // Color & size based on pressure/phase
+      // Left side (seg 0, 1, 2) = cold low pressure (#38bdf8); Right side (seg 3, 4, 5) = hot high pressure (#f97316)
+      if (pos.seg <= 2) {
+        p.el.setAttribute("fill", "#e0f2fe");
+        p.el.setAttribute("stroke", "#0284c7");
+        p.el.setAttribute("stroke-width", "2");
+        // Expand radius as it boils in evaporator (seg 1)
+        const r = pos.seg === 1 ? 5 + (1 - (pos.y - 95) / 320) * 3.5 : (pos.seg === 2 ? 8.5 : 5);
+        p.el.setAttribute("r", r.toFixed(1));
+      } else {
+        p.el.setAttribute("fill", "#fef08a");
+        p.el.setAttribute("stroke", "#ea580c");
+        p.el.setAttribute("stroke-width", "2");
+        // Shrink radius as it condenses in condenser (seg 4)
+        const r = pos.seg === 4 ? 7.5 - ((pos.y - 95) / 320) * 3 : (pos.seg === 3 ? 7.5 : 4.5);
+        p.el.setAttribute("r", r.toFixed(1));
+      }
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+selectStage(0);
+document.getElementById("playBtn").textContent = playing ? "Pause Animation" : "Play Animation";
+document.getElementById("playBtn").setAttribute("aria-pressed", String(playing));
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>
